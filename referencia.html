@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referencia de Migración</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="shell">
+    <div class="title-bar">
+      <h1>Referencia de Migración</h1>
+      <div class="subtitle">Mapeo funcional desde los proyectos VB6 originales.</div>
+    </div>
+
+    <div class="nav-strip">
+      <a class="nav-button" href="index.html">Inicio</a>
+      <a class="nav-button" href="simulaciones.html">Simulaciones</a>
+      <a class="nav-button active" href="referencia.html">Referencia</a>
+    </div>
+
+    <section class="panel card">
+      <h2>Alcance</h2>
+      <p>
+        La migración cubre los siete formularios VB6 del repositorio y los lleva a una interfaz
+        web estática. Se preservan las fórmulas, los parámetros principales, la lógica de animación
+        y los modos de trabajo originales, adaptados a controles HTML y canvas.
+      </p>
+    </section>
+
+    <section class="panel card">
+      <h2>Mapeo VB6 → Web</h2>
+      <ul class="list">
+        <li><span class="mono">Form</span> → panel visible dentro de una SPA.</li>
+        <li><span class="mono">PictureBox</span> → canvas 2D.</li>
+        <li><span class="mono">Timer</span> → loops controlados con <span class="mono">setInterval</span>.</li>
+        <li><span class="mono">TextBox / ComboBox / ScrollBar / Slider</span> → inputs y selects HTML nativos.</li>
+        <li><span class="mono">PSet / Line / Shape</span> → trazado directo en canvas.</li>
+        <li><span class="mono">GuardarTablaEnArchivo</span> → descarga de archivo separado por tabulaciones.</li>
+      </ul>
+    </section>
+
+    <section class="page-grid">
+      <article class="panel card">
+        <h3>Ondas Longitudinales</h3>
+        <p>
+          Conserva la solución estacionaria <span class="mono">A·sin(kx)·cos(wt)</span> y la derivada
+          espacial usada para presión. Incluye escalas de desplazamiento y presión.
+        </p>
+      </article>
+
+      <article class="panel card">
+        <h3>Ondas Transversales</h3>
+        <p>
+          Mantiene la suma de 13 armónicos del formulario original, con sliders verticales y
+          control de equilibrio, paso, retroceso y ejecución continua.
+        </p>
+      </article>
+
+      <article class="panel card">
+        <h3>Figuras de Lissajous</h3>
+        <p>
+          Replica el modelo basado en cosenos y el selector de fase lineal o multiplicada por π.
+          Se puede recorrer paso a paso o dibujar el lazo completo.
+        </p>
+      </article>
+
+      <article class="panel card">
+        <h3>Péndulo Elástico</h3>
+        <p>
+          Mantiene integración radial/angular con rozamiento, modo inextensible y exportación
+          de columnas equivalentes al programa VB6.
+        </p>
+      </article>
+
+      <article class="panel card">
+        <h3>Órbitas Planetarias</h3>
+        <p>
+          Usa la integración polar del original para fuerza gravitatoria o elástica, con trazas
+          orbitales y gráficos auxiliares para variables radiales y tangenciales.
+        </p>
+      </article>
+
+      <article class="panel card">
+        <h3>Fluido Viscoso y Ley de Snell</h3>
+        <p>
+          Fluido Viscoso conserva la ecuación con arrastre de Stokes y flotación. Ley de Snell
+          incluye los diez materiales precargados y detección de reflexión total interna.
+        </p>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

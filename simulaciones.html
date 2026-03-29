@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulaciones Numéricas - App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="shell">
+    <div class="title-bar">
+      <h1>Simulaciones Numéricas</h1>
+      <div class="subtitle">Migración estática desde Visual Basic 6.0</div>
+    </div>
+
+    <div class="nav-strip">
+      <a class="nav-button" href="index.html">Inicio</a>
+      <button class="nav-button active" data-sim="longitudinal">1. Longitudinales</button>
+      <button class="nav-button" data-sim="transversal">2. Transversales</button>
+      <button class="nav-button" data-sim="lissajous">3. Lissajous</button>
+      <button class="nav-button" data-sim="pendulo">4. Péndulo</button>
+      <button class="nav-button" data-sim="orbitas">5. Órbitas</button>
+      <button class="nav-button" data-sim="viscoso">6. Fluido</button>
+      <button class="nav-button" data-sim="snell">7. Snell</button>
+      <a class="nav-button" href="referencia.html">Referencia</a>
+    </div>
+
+    <div class="layout">
+      <aside class="panel sidebar card">
+        <h2>Acerca de esta app</h2>
+        <p>
+          Cada panel replica un formulario VB6 con ecuaciones y parámetros equivalentes.
+          Las simulaciones corren enteramente en tu navegador.
+        </p>
+        <p class="note">
+          Consejo: si un sistema queda inestable, usá <strong>Reiniciar</strong> o
+          <strong>Equilibrio</strong> antes de volver a correrlo.
+        </p>
+      </aside>
+
+      <main>
+        <section id="sim-longitudinal" class="panel sim-panel active">
+          <h2 class="frame-title">Ondas Longitudinales en un Tubo con Gas</h2>
+          <div class="grid-2">
+            <div class="frame">
+              <div class="grid-2">
+                <div>
+                  <div class="control-row"><label for="longi-np">N partículas</label><input id="longi-np" class="textbox" type="text" value="30"></div>
+                  <div class="control-row"><label for="longi-kcor">K</label><input id="longi-kcor" class="textbox" type="text" value="141610"></div>
+                  <div class="control-row"><label for="longi-ro">ρ</label><input id="longi-ro" class="textbox" type="text" value="1.225"></div>
+                  <div class="control-row"><label for="longi-f">f</label><input id="longi-f" class="textbox readonly" type="text" readonly></div>
+                  <div class="control-row"><label for="longi-l">L</label><input id="longi-l" class="textbox" type="text" value="0.5"></div>
+                </div>
+                <div>
+                  <div class="control-row"><label for="longi-c">c</label><input id="longi-c" class="textbox readonly" type="text" readonly></div>
+                  <div class="control-row"><label for="longi-a">Amplitud</label><input id="longi-a" class="textbox" type="text" value="0.05"></div>
+                  <div class="control-row"><label for="longi-dt">dt</label><input id="longi-dt" class="textbox" type="text" value="0.05"></div>
+                  <div class="control-row"><label for="longi-lambda">λ</label><input id="longi-lambda" class="textbox readonly" type="text" readonly></div>
+                  <div class="control-row"><label for="longi-k">k</label><input id="longi-k" class="textbox readonly" type="text" readonly></div>
+                </div>
+              </div>
+              <div class="control-row">
+                <label for="longi-modo">Modo normal</label>
+                <div class="range-wrap"><input id="longi-modo" type="range" min="1" max="8" step="1" value="1"><span id="longi-modo-value" class="range-value">1</span></div>
+              </div>
+              <div class="control-row">
+                <label for="longi-interval">Intervalo T</label>
+                <div class="range-wrap"><input id="longi-interval" type="range" min="10" max="200" step="1" value="50"><span id="longi-interval-value" class="range-value">50</span></div>
+              </div>
+              <div class="control-row">
+                <label for="longi-scale-d">Escala desplaz.</label>
+                <div class="range-wrap"><input id="longi-scale-d" type="range" min="1" max="100" step="1" value="30"><span id="longi-scale-d-value" class="range-value">30</span></div>
+              </div>
+              <div class="control-row">
+                <label for="longi-scale-p">Escala presión</label>
+                <div class="range-wrap"><input id="longi-scale-p" type="range" min="1" max="100" step="1" value="30"><span id="longi-scale-p-value" class="range-value">30</span></div>
+              </div>
+              <div class="button-row">
+                <button id="longi-equilibrio" class="button">Equilibrio</button>
+                <button id="longi-detener" class="button">Detener</button>
+                <button id="longi-paso" class="button">Paso</button>
+                <button id="longi-continuar" class="button">Continuar</button>
+                <button id="longi-aplicar" class="button">Aplicar</button>
+                <button id="longi-reiniciar" class="button">Reiniciar</button>
+              </div>
+            </div>
+            <div class="frame help">
+              Solución usada: <span class="mono">f(x,t)=A·sin(kx)·cos(wt)</span>. La gráfica roja muestra desplazamiento y la azul la derivada espacial asociada a presión.
+            </div>
+          </div>
+          <div class="canvas-stack">
+            <div class="canvas-frame"><canvas id="longi-canvas-main" class="wide-canvas" width="920" height="180"></canvas></div>
+            <div class="canvas-frame"><canvas id="longi-canvas-graph" class="sim-canvas" width="920" height="250"></canvas></div>
+          </div>
+        </section>
+
+        <section id="sim-transversal" class="panel sim-panel">
+          <h2 class="frame-title">Ondas Transversales de Frecuencias Compuestas</h2>
+          <div class="frame">
+            <div id="transv-harmonics" class="harmonics"></div>
+            <div class="button-row">
+              <button id="transv-retroceder" class="button">Paso atrás</button>
+              <button id="transv-detener" class="button">Detener</button>
+              <button id="transv-paso" class="button">Paso</button>
+              <button id="transv-continuar" class="button">Continuar</button>
+              <button id="transv-equilibrio" class="button">Equilibrio</button>
+            </div>
+          </div>
+          <div class="canvas-frame"><canvas id="transv-canvas" class="sim-canvas" width="920" height="280"></canvas></div>
+        </section>
+
+        <section id="sim-lissajous" class="panel sim-panel">
+          <h2 class="frame-title">Figuras de Lissajous</h2>
+          <div class="grid-2">
+            <div class="frame">
+              <div class="grid-2">
+                <div class="control-row"><label for="lissa-a">A</label><input id="lissa-a" class="textbox" type="text" value="120"></div>
+                <div class="control-row"><label for="lissa-b">B</label><input id="lissa-b" class="textbox" type="text" value="120"></div>
+                <div class="control-row"><label for="lissa-w1">ω1</label><input id="lissa-w1" class="textbox" type="text" value="4"></div>
+                <div class="control-row"><label for="lissa-w2">ω2</label><input id="lissa-w2" class="textbox" type="text" value="8"></div>
+                <div class="control-row"><label for="lissa-phase">Fase</label><input id="lissa-phase" class="textbox" type="text" value="0.5"></div>
+                <div class="control-row"><label for="lissa-phase-pi">Multiplicar por π</label><input id="lissa-phase-pi" type="checkbox" checked></div>
+              </div>
+              <div class="button-row">
+                <button id="lissa-dibujar" class="button">Dibujar ciclo</button>
+                <button id="lissa-paso" class="button">Paso</button>
+                <button id="lissa-animar" class="button">Animar</button>
+                <button id="lissa-limpiar" class="button">Limpiar</button>
+              </div>
+            </div>
+            <div class="frame help">El modelo sigue el formulario VB6 original: <span class="mono">x=A·cos(ω1·t)</span> y <span class="mono">y=B·cos(ω2·t+φ)</span>.</div>
+          </div>
+          <div class="canvas-frame"><canvas id="lissa-canvas" class="sim-canvas" width="920" height="320"></canvas></div>
+        </section>
+
+        <section id="sim-pendulo" class="panel sim-panel">
+          <h2 class="frame-title">Péndulo Elástico</h2>
+          <div class="grid-2">
+            <div class="frame">
+              <div class="grid-2">
+                <div class="control-row compact"><label for="pend-k">k</label><input id="pend-k" class="textbox" type="text" value="0.2"></div>
+                <div class="control-row compact"><label for="pend-l0">L0</label><input id="pend-l0" class="textbox" type="text" value="120"></div>
+                <div class="control-row compact"><label for="pend-masa">Masa</label><input id="pend-masa" class="textbox" type="text" value="10"></div>
+                <div class="control-row compact"><label for="pend-g">g</label><input id="pend-g" class="textbox" type="text" value="9.81"></div>
+                <div class="control-row compact"><label for="pend-drdt">dr/dt</label><input id="pend-drdt" class="textbox" type="text" value="0"></div>
+                <div class="control-row compact"><label for="pend-radio">Radio</label><input id="pend-radio" class="textbox" type="text" value="140"></div>
+                <div class="control-row compact"><label for="pend-dthetadt">dθ/dt</label><input id="pend-dthetadt" class="textbox" type="text" value="0.02"></div>
+                <div class="control-row compact"><label for="pend-theta">θ</label><input id="pend-theta" class="textbox" type="text" value="0.5"></div>
+                <div class="control-row compact"><label for="pend-dt">dt</label><input id="pend-dt" class="textbox" type="text" value="0.02"></div>
+                <div class="control-row compact"><label for="pend-tmax">Tmax</label><input id="pend-tmax" class="textbox" type="text" value="40"></div>
+                <div class="control-row compact"><label for="pend-gamma">Γ roz.</label><input id="pend-gamma" class="textbox" type="text" value="0"></div>
+                <div class="control-row compact"><label for="pend-inextensible">Inextensible</label><input id="pend-inextensible" type="checkbox"></div>
+                <div class="control-row compact"><label for="pend-traza">Traza</label><input id="pend-traza" type="checkbox" checked></div>
+              </div>
+              <div class="button-row">
+                <button id="pend-iniciar" class="button">Iniciar</button>
+                <button id="pend-detener" class="button">Detener</button>
+                <button id="pend-reset" class="button">Reiniciar</button>
+                <button id="pend-export" class="button">Exportar TSV</button>
+              </div>
+            </div>
+            <div class="frame help">La integración se mantiene en coordenadas radial/angular, con el término de rozamiento original y opción de cuerda inextensible.</div>
+          </div>
+          <div class="canvas-frame"><canvas id="pend-canvas" class="sim-canvas" width="920" height="320"></canvas></div>
+        </section>
+
+        <section id="sim-orbitas" class="panel sim-panel">
+          <h2 class="frame-title">Órbitas Planetarias</h2>
+          <div class="grid-2">
+            <div class="frame">
+              <div class="grid-2">
+                <div class="control-row compact"><label for="orb-theta">θ</label><input id="orb-theta" class="textbox" type="text" value="0"></div>
+                <div class="control-row compact"><label for="orb-dtheta">dθ/dt</label><input id="orb-dtheta" class="textbox" type="text" value="1.92"></div>
+                <div class="control-row compact"><label for="orb-d2theta">d²θ/dt²</label><input id="orb-d2theta" class="textbox" type="text" value="0"></div>
+                <div class="control-row compact"><label for="orb-radio">Radio</label><input id="orb-radio" class="textbox" type="text" value="30"></div>
+                <div class="control-row compact"><label for="orb-dradio">dr/dt</label><input id="orb-dradio" class="textbox" type="text" value="1"></div>
+                <div class="control-row compact"><label for="orb-d2radio">d²r/dt²</label><input id="orb-d2radio" class="textbox" type="text" value="0"></div>
+                <div class="control-row compact"><label for="orb-k">k</label><input id="orb-k" class="textbox" type="text" value="4"></div>
+                <div class="control-row compact"><label for="orb-lnat">Long. nat.</label><input id="orb-lnat" class="textbox" type="text" value="0"></div>
+                <div class="control-row compact"><label for="orb-force">Fuerza</label><select id="orb-force"><option value="grav">Gravitatoria</option><option value="spring">Elástica</option></select></div>
+                <div class="control-row compact"><label for="orb-graph-overlay">Graficar superpuesto</label><input id="orb-graph-overlay" type="checkbox"></div>
+              </div>
+              <div class="button-row">
+                <button id="orb-iniciar" class="button">Iniciar</button>
+                <button id="orb-detener" class="button">Detener</button>
+                <button id="orb-reset" class="button">Reiniciar</button>
+              </div>
+            </div>
+            <div class="frame help">Modelo polar del VB6 original con gráficos radiales y tangenciales. La componente tangencial se mantiene nula, como en el formulario fuente.</div>
+          </div>
+          <div class="canvas-stack">
+            <div class="canvas-frame"><canvas id="orb-canvas" class="sim-canvas" width="920" height="320"></canvas></div>
+            <div class="grid-2">
+              <div class="canvas-frame"><canvas id="orb-radial-canvas" class="mini-canvas" width="450" height="180"></canvas></div>
+              <div class="canvas-frame"><canvas id="orb-angular-canvas" class="mini-canvas" width="450" height="180"></canvas></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sim-viscoso" class="panel sim-panel">
+          <h2 class="frame-title">Fluido Viscoso</h2>
+          <div class="grid-2">
+            <div class="frame">
+              <div class="control-row compact"><label for="visc-radio">Radio (mm)</label><input id="visc-radio" class="textbox" type="text" value="1.825"></div>
+              <div class="control-row compact"><label for="visc-densidad">ρ (kg/m³)</label><input id="visc-densidad" class="textbox" type="text" value="800"></div>
+              <div class="control-row compact"><label for="visc-masa">Masa (g)</label><input id="visc-masa" class="textbox" type="text" value="0.162"></div>
+              <div class="control-row compact"><label for="visc-nu">Viscosidad</label><input id="visc-nu" class="textbox" type="text" value="0.2"></div>
+              <div class="control-row compact"><label for="visc-g">g</label><input id="visc-g" class="textbox" type="text" value="9.8"></div>
+              <div class="control-row compact"><label for="visc-dt">dt</label><input id="visc-dt" class="textbox" type="text" value="0.01"></div>
+              <div class="button-row">
+                <button id="visc-iniciar" class="button">Iniciar</button>
+                <button id="visc-detener" class="button">Detener</button>
+                <button id="visc-reset" class="button">Reiniciar</button>
+              </div>
+            </div>
+            <div class="frame help">Se aplica la misma ecuación del original con arrastre viscoso y empuje. La partícula se detiene al tocar los límites del recipiente.</div>
+          </div>
+          <div class="canvas-frame"><canvas id="visc-canvas" class="sim-canvas" width="920" height="320"></canvas></div>
+        </section>
+
+        <section id="sim-snell" class="panel sim-panel">
+          <h2 class="frame-title">Ley de Snell</h2>
+          <div class="grid-2">
+            <div class="frame">
+              <div class="control-row compact"><label for="snell-material-1">Material 1</label><select id="snell-material-1"></select></div>
+              <div class="control-row compact"><label for="snell-material-2">Material 2</label><select id="snell-material-2"></select></div>
+              <div class="control-row compact"><label for="snell-n1">n1</label><input id="snell-n1" class="textbox" type="text"></div>
+              <div class="control-row compact"><label for="snell-n2">n2</label><input id="snell-n2" class="textbox" type="text"></div>
+              <div class="control-row compact"><label for="snell-angle">Ángulo</label><input id="snell-angle" class="textbox" type="text" value="30"></div>
+              <div class="control-row"><label for="snell-angle-range">Incidencia</label><div class="range-wrap"><input id="snell-angle-range" type="range" min="-89" max="89" step="1" value="30"><span id="snell-angle-value" class="range-value">30°</span></div></div>
+              <div class="control-row compact"><label for="snell-refr">Refracción</label><input id="snell-refr" class="textbox readonly" type="text" readonly></div>
+              <div class="control-row compact"><label for="snell-refl">Reflexión</label><input id="snell-refl" class="textbox readonly" type="text" readonly></div>
+              <div class="button-row">
+                <button id="snell-calcular" class="button">Calcular</button>
+                <button id="snell-animar" class="button">Animar</button>
+              </div>
+            </div>
+            <div class="frame help">Incluye los 10 materiales precargados del proyecto VB6 y maneja reflexión total interna cuando <span class="mono">|n1/n2·sin(θ1)| &gt; 1</span>.</div>
+          </div>
+          <div class="canvas-frame"><canvas id="snell-canvas" class="sim-canvas" width="920" height="320"></canvas></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-copy"><strong>Estado:</strong> <span id="status-text">Listo</span></div>
+      <div class="pill mono" id="active-sim-pill">longitudinal</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
